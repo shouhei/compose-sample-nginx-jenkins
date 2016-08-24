@@ -1,0 +1,18 @@
+jenkins:
+  image: jenkins:latest
+  ports:
+    - "8080:8080"
+  volumes:
+    - /Users/shouhei/WorkSpace/sample/infra/docker/compose-nginx-jenkins/jenkins_home:/var/jenkins_home
+  environment:
+    JENKINS_OPTS: --prefix=/jenkins --httpListenAddress=0.0.0.0
+nginx:
+  image: nginx:latest
+  volumes:
+    - /Users/shouhei/WorkSpace/sample/infra/docker/compose-nginx-jenkins/etc/nginx/conf.d:/etc/nginx/conf.d:ro
+  expose:
+    - "80"
+  ports:
+    - "80:80"
+  links:
+    - jenkins:jenkins
